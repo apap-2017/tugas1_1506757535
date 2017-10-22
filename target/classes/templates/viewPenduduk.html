@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    	
+    <head th:replace="fragments/head :: head('Melihat Penduduk')"></head>
+    <body>
+       	<div th:replace="/fragments/header :: header">Header</div>
+		
+		<div class="container">
+			<h1 th:text="'Lihat Data Penduduk - ' + ${penduduk.nik}">NIK Penduduk</h1> <br/>
+	       
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">NIK</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${penduduk.nik}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+				<h5 class="h5 col-sm-6">Nama</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${penduduk.nama}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Tempat/Tanggal Lahir</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${penduduk.tempatLahir} + '/' + ${#dates.format(penduduk.tanggalLahir, 'dd-MM-yyyy')}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+				<h5 class="h5 col-sm-6">Jenis Kelamin</h5>
+		       	<h5 class="h5 col-sm-6" th:if="${penduduk.jenisKelamin}==0">Pria</h5>
+		       	<h5 class="h5 col-sm-6" th:if="${penduduk.jenisKelamin}==1">Wanita</h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+				<h5 class="h5 col-sm-6">Kewarganegaraan</h5>
+		       	<h5 class="h5 col-sm-6" th:if="${penduduk.isWni}==1">WNI</h5>
+		       	<h5 class="h5 col-sm-6" th:if="${penduduk.isWni}==0">WNA</h5>
+	       	</div>
+
+			<div class="form-inline">
+				<h5 class="h5 col-sm-6">Agama</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${penduduk.agama}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Pekerjaan</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.pekerjaan))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Status Perkawinan</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.statusPerkawinan))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Status dalam Keluarga</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.statusDalamKeluarga))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+		       	<h5 class="h5 col-sm-6">Golongan Darah</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${penduduk.golonganDarah}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Alamat Penduduk</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(penduduk.alamat.alamat)}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+		       	<h5 class="h5 col-sm-6">RT/RW Penduduk</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${penduduk.alamat.rt} + '/' + ${penduduk.alamat.rw}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Kelurahan/Desa</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.alamat.namaKelurahan))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Kecamatan</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.alamat.namaKecamatan))}"></h5>
+		    </div>
+		    
+	       	<div class="form-inline">
+		       	<h5 class="h5 col-sm-6">Kota</h5>
+		       	<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.alamat.namaKota))}"></h5>
+	       	</div>
+	       	
+	       	<form action="penduduk/mati" method="post" th:if="${penduduk.isWafat}==0" class="form-inline">
+	       		<h5 class="h5 col-sm-6">Status Kematian</h5>
+	       		<h5 class="h5 col-sm-4">Hidup</h5>
+	       		<input type="hidden" name="nik" th:value="${penduduk.nik}" class="form-control"/>
+	       		<button type="submit" class="btn btn-danger">Nonaktifkan</button>
+	       	</form>
+	       	
+	       	<div class="form-inline" th:if="${penduduk.isWafat}==1">
+	       		<h5 class="h5 col-sm-6">Status Kematian</h5>
+	       		<h5 class="h5 col-sm-4">Meninggal</h5>
+	       	</div>
+		</div>
+    </body>
+</html>
+

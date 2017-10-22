@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+	<head th:replace="fragments/head :: head('Cari Penduduk')"></head>
+	
+    <body>
+    	<div th:replace="/fragments/header :: header">Header</div>
+       	<div class="container">
+	       	<form action="/penduduk/cari" method="get" th:if="${modelKota} == null">
+	       		<h2>Lihat Data Penduduk Berdasarkan Kota</h2>
+	       		
+	       		<div class="form-group">
+		       		<label for="kt">Kota/Kabupaten</label> <br/>
+		       		<select name="kt" class="form-control">
+		       			<option selected="selected" hidden="true" disabled="disabled">Pilih Kota</option>
+		       			<option th:each="modelKota: ${listKota}" th:value="${modelKota.id}" 
+		       				th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))}"></option>
+		       		</select>
+				</div>       		
+	       		<button type="submit" class="btn btn-default">Lihat</button>
+	       	</form>
+	       	
+	       	<form action="/penduduk/cari" method="get" th:if="${modelKota} != null and ${modelKecamatan} == null and ${modelKelurahan} == null">
+	       		<h2 th:text="'Lihat Data Penduduk Berdasarkan Kecamatan di ' 
+	       			+ ${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))}">Lihat Data Penduduk - Pemilihan Kecamatan</h2>
+	       		
+	       		<div class="form-group">
+		       		<label for="kt">Kota/Kabupaten</label> <br/>
+		       		<select name="kt" disabled="disabled" class="form-control">
+		       			<option selected="selected" th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))}"></option>
+		       		</select>
+		       		<input type="hidden" name="kt" th:value="${modelKota.id}"/>
+		       	</div>
+		       	
+		       	<div class="form-group">
+		       		<label for="kc">Kecamatan</label> <br/>
+		       		<select name="kc" class="form-control">
+		       			<option selected="selected" hidden="true" disabled="disabled">Pilih Kecamatan</option>
+		       			<option th:each="modelKecamatan: ${listKecamatan}" th:value="${modelKecamatan.id}" 
+		       				th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKecamatan.namaKecamatan))}"></option>
+		       		</select>
+		       	</div>	       		
+	       		<button type="submit" class="btn btn-default">Lihat</button>
+	       	</form>
+	       	
+	       	<form action="/penduduk/cari" method="get" th:if="${modelKota} != null and ${modelKecamatan} != null and ${modelKelurahan} == null">
+	       		<h2 th:text="'Lihat Data Penduduk Berdasarkan Kelurahan di ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))} 
+	       				+ ', ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKecamatan.namaKecamatan))}">Lihat Data Penduduk - Pemilihan Kelurahan</h2>
+	       		
+	       		<div class="form-group">
+		       		<label for="kt">Kota/Kabupaten</label> <br/>
+		       		<select name="kt" disabled="disabled" class="form-control">
+		       			<option selected="selected" th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))}"></option>
+		       		</select>
+		       		<input type="hidden" name="kt" th:value="${modelKota.id}"/>
+		       	</div>	       		
+	       		
+	       		<div class="form-group">
+		       		<label for="kc">Kecamatan</label> <br/>
+		       		<select name="kc" disabled="disabled" class="form-control">
+		       			<option selected="selected" th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKecamatan.namaKecamatan))}"></option>
+		       		</select>
+		       		<input type="hidden" name="kc" th:value="${modelKecamatan.id}"/>
+		       	</div>
+		       	
+		       	<div class="form-group">
+		       		<label for="kl">Kelurahan</label> <br/>
+		       		<select name="kl" class="form-control">
+		       			<option selected="selected" hidden="true" disabled="disabled" class="form-control">Pilih Kelurahan</option>
+		       			<option th:each="modelKelurahan: ${listKelurahan}" th:value="${modelKelurahan.id}" 
+		       				th:text="${#strings.capitalizeWords(#strings.toLowerCase(modelKelurahan.namaKelurahan))}"></option>
+		       		</select>
+	       		</div>
+	       		<button type="submit" class="btn btn-default">Lihat</button>
+	       	</form>
+		</div>
+	       	
+	       	<div th:if="${modelKota} != null and ${modelKecamatan} != null and ${modelKelurahan} != null" class="px-2">
+		       	<h2 th:text="'Lihat Data Penduduk Berdasarkan di ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))} 
+	       				+ ', ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKecamatan.namaKecamatan))} + ', ' + 
+	       				${#strings.capitalizeWords(#strings.toLowerCase(modelKelurahan.namaKelurahan))}"
+	       				class="text-center">Lihat Data Penduduk</h2> <br/>
+	       				
+	       		<table id="wargaKelurahanTable" class="display table">
+		       		<thead>
+			       		<tr>
+			       			<th>No</th>
+			       			<th>Nama Lengkap</th>
+			       			<th>NIK</th>
+			       			<th>Jenis Kelamin</th>
+			       			<th>Tempat Lahir</th>
+			       			<th>Tanggal Lahir</th>
+			       			<th>Agama</th>
+			       			<th>Pekerjaan</th>
+			       			<th>Status Perkawinan</th>
+			       			<th>Status dalam Keluarga</th>
+			       			<th>Kewarganegaraan</th>
+			       		</tr>
+			       	</thead>
+		       		<tbody>
+			       		<tr th:each="penduduk,iterationStatus: ${listWargaKelurahan}">
+			       			<td th:text="${iterationStatus.count}">No</td>
+			       			<td th:text="${penduduk.nama}">Nama</td>
+			       			<td th:text="${penduduk.nik}">NIK</td>
+			       			<td th:text="${penduduk.jenisKelamin}">Jenis Kelamin</td>
+			       			<td th:text="${penduduk.tempatLahir}">Tempat Lahir</td>
+			       			<td th:text="${#dates.format(penduduk.tanggalLahir, 'dd-MM-yyyy')}">Tanggal Lahir</td>
+			       			<td th:text="${penduduk.agama}"></td>
+			       			<td th:text="${penduduk.pekerjaan}"></td>
+			       			<td th:text="${#strings.capitalizeWords(#strings.toLowerCase(penduduk.statusPerkawinan))}"></td>
+			       			<td th:text="${penduduk.statusDalamKeluarga}"></td>
+			       			<td th:text="${penduduk.isWni}"></td>       			
+			       		</tr>
+			       	</tbody>
+		       	</table> <br/>
+	       	</div>
+    </body>
+    <script type="text/javascript">
+	    $(document).ready( function () {
+	        $('#wargaKelurahanTable').DataTable();
+	    } );
+    </script>
+</html>
+

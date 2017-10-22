@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<head th:replace="fragments/head :: head('Keluarga Gagal Ditambahkan')"></head>
+	
+	<body>
+		<div th:replace="/fragments/header :: header">Header</div>
+		<div class="container">
+			<h1 class="page-header">Gagal!</h1><br/>
+			<h3 class="h3">Alamat:</h3>
+			<h4 class="h4 col-sm-6" th:text="'Kelurahan ' + ${alamat.namaKelurahan}">Kelurahan</h4>
+			<h4 class="h4 col-sm-6" th:text="'Kecamatan ' + ${alamat.namaKecamatan}">Kecamatan</h4>
+			<h4 class="h4 col-sm-6" th:text="${alamat.namaKota}">Kota</h4> <br/>
+			<h3 class="h3">Tidak ditemukan</h3>
+		</div>
+	</body>
+</html>
+

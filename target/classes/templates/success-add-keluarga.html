@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<head th:replace="fragments/head :: head('Keluarga Berhasil Ditambahkan')"></head>
+	
+	<body>
+		<div th:replace="/fragments/header :: header">Header</div>
+		<div class="container">
+			<h1 class="page-header">Sukses!</h1>
+			<h3 th:text="'Keluarga dengan NKK ' + ${nkk} + ' berhasil ditambahkan'">Keluarga berhasil ditambahkan</h3>
+		</div>
+	</body>
+</html>
+

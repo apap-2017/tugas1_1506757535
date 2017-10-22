@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<head th:replace="fragments/head :: head('Penduduk Berhasil Dinonaktifkan')"></head>
+	
+	<body>
+		<div th:replace="/fragments/header :: header">Header</div>
+		<div class="container">
+			<h1 class="page-header">Sukses!</h1>
+			<h3 th:text="'Penduduk dengan NIK ' + ${nik} + ' sudah tidak aktif'">Penduduk sudah tidak aktif</h3>
+		</div>
+	</body>
+</html>
+

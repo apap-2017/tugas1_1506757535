@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+	<head th:replace="fragments/head :: head('Melihat Keluarga')"></head>
+
+    <body>
+       	<div th:replace="/fragments/header :: header">Header</div>
+		<div class="container">
+			<h1 th:text="'Lihat Data Keluarga - ' + ${keluarga.nomorKk}">NKK Keluarga</h1>
+
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">NKK</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${keluarga.nomorKk}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Alamat</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(keluarga.alamat.alamat))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">RT/RW</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${keluarga.alamat.rt} + '/' + ${keluarga.alamat.rw}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Kelurahan/Desa</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(keluarga.alamat.namaKelurahan))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Kecamatan</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(keluarga.alamat.namaKecamatan))}"></h5>
+	       	</div>
+	       	
+	       	<div class="form-inline">
+	       		<h5 class="h5 col-sm-6">Kota</h5>
+	       		<h5 class="h5 col-sm-6" th:text="${#strings.capitalizeWords(#strings.toLowerCase(keluarga.alamat.namaKota))}"></h5>
+	       	</div><hr/>
+	       	
+	       	<table class="table table-hover table-bordered">
+	       		<thead>
+		       		<tr>
+		       			<th>No</th>
+		       			<th>Nama Lengkap</th>
+		       			<th>NIK</th>
+		       			<th>Jenis Kelamin</th>
+		       			<th>Tempat Lahir</th>
+		       			<th>Tanggal Lahir</th>
+		       			<th>Agama</th>
+		       			<th>Pekerjaan</th>
+		       			<th>Status Perkawinan</th>
+		       			<th>Status dalam Keluarga</th>
+		       			<th>Kewarganegaraan</th>
+		       		</tr>
+		       	</thead>
+	       		<tbody>
+		       		<tr th:each="anggotaKeluarga,iterationStatus: ${keluarga.anggotaKeluarga}">
+		       			<td th:text="${iterationStatus.count}">No</td>
+		       			<td th:text="${anggotaKeluarga.nama}">Nama</td>
+		       			<td th:text="${anggotaKeluarga.nik}">NIK</td>
+		       			<td th:if="${anggotaKeluarga.jenisKelamin}==0">Pria</td>
+		       			<td th:if="${anggotaKeluarga.jenisKelamin}==1">Wanita</td>
+		       			<td th:text="${anggotaKeluarga.tempatLahir}">Tempat Lahir</td>
+		       			<td th:text="${#dates.format(anggotaKeluarga.tanggalLahir, 'dd-MM-yyyy')}">Tanggal Lahir</td>
+		       			<td th:text="${anggotaKeluarga.agama}"></td>
+		       			<td th:text="${anggotaKeluarga.pekerjaan}"></td>
+		       			<td th:text="${#strings.capitalizeWords(#strings.toLowerCase(anggotaKeluarga.statusPerkawinan))}"></td>
+		       			<td th:text="${anggotaKeluarga.statusDalamKeluarga}"></td>
+		       			<td th:if="${anggotaKeluarga.isWni}==1">WNI</td>
+		       			<td th:if="${anggotaKeluarga.isWni}==0">WNA</td>       			
+		       		</tr>
+		       	</tbody>
+	       	</table>
+		</div>
+    </body>
+</html>
