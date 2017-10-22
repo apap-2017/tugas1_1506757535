@@ -103,8 +103,13 @@ public class KependudukanController {
 					KelurahanModel modelKelurahan = kelurahanDAO.selectKelurahan(new BigInteger(kelurahan));
 					model.addAttribute("modelKelurahan", modelKelurahan);
 					List<PendudukModel> listWargaKelurahan = pendudukDAO.selectWargaKelurahan(modelKelurahan.getId());
-					model.addAttribute("listWargaKelurahan", listWargaKelurahan);
-					
+					if(listWargaKelurahan == null) {
+						model.addAttribute("listKosong", true);
+					} else {
+						model.addAttribute("listWargaKelurahan", listWargaKelurahan);
+						model.addAttribute("lastIndex", listWargaKelurahan.size()-1);
+					}
+						
 				} else {
 					List<KelurahanModel> listKelurahan = kelurahanDAO.selectKelurahanByKecamatan(modelKecamatan.getId());
 					model.addAttribute("listKelurahan", listKelurahan);

@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,13 @@ public class PendudukServiceDatabase implements PendudukService {
         for(int i = 0; i < listIdKeluarga.size(); i++) {
         	pendudukKelurahan.addAll(pendudukMapper.selectAnggotaKeluarga(listIdKeluarga.get(i)));
         }
-		return pendudukKelurahan;
+        if(pendudukKelurahan.isEmpty()) {
+        	return null;
+        } else {
+            Collections.sort(pendudukKelurahan);
+    		return pendudukKelurahan;
+        }
+
 	}
 
 	@Override
@@ -84,6 +91,7 @@ public class PendudukServiceDatabase implements PendudukService {
 		return true;
 	}
 
+	@Override
 	public String generateNik(PendudukModel penduduk) {
 		String tanggalLahir = penduduk.getTanggalLahir().toString(); //yyyy-mm-dd
         tanggalLahir = (penduduk.getJenisKelamin()==0?tanggalLahir.substring(8):String.valueOf(Integer.parseInt(tanggalLahir.substring(8))+40)) +
@@ -100,6 +108,7 @@ public class PendudukServiceDatabase implements PendudukService {
         return nik;
 	}
 	
+	@Override
 	public String generateNik(PendudukModel penduduk, String nikLama) {
 		String tanggalLahir = penduduk.getTanggalLahir().toString(); //yyyy-mm-dd
         tanggalLahir = (penduduk.getJenisKelamin()==0?tanggalLahir.substring(8):String.valueOf(Integer.parseInt(tanggalLahir.substring(8))+40)) +

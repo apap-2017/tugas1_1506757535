@@ -79,7 +79,46 @@
 		       	<h2 th:text="'Lihat Data Penduduk Berdasarkan di ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKota.namaKota))} 
 	       				+ ', ' + ${#strings.capitalizeWords(#strings.toLowerCase(modelKecamatan.namaKecamatan))} + ', ' + 
 	       				${#strings.capitalizeWords(#strings.toLowerCase(modelKelurahan.namaKelurahan))}"
-	       				class="text-center">Lihat Data Penduduk</h2> <br/>
+	       				class="text-center">Lihat Data Penduduk</h2> <hr/> <br/> 
+	       				
+	       		<div th:unless="${listKosong}" class="form-inline">
+	       			<div class="col-sm-6">
+	       				<h5 class="h5 text-center">Penduduk dengan Usia Termuda</h5>
+	       				<table class="display table">
+	       					<tr>
+	       						<td>NIK</td>
+	       						<td th:text="${listWargaKelurahan[0].nik}"></td>
+	       					</tr>
+	       					<tr>
+	       						<td>Nama</td>
+	       						<td th:text="${listWargaKelurahan[0].nama}"></td>
+	       					</tr>
+	       					<tr>
+	       						<td>Tanggal Lahir</td>
+	       						<td th:text="${#dates.format(listWargaKelurahan[0].tanggalLahir, 'dd MMMM yyyy')}"></td>
+	       					</tr>
+	       				</table>
+	       			</div>
+	       			
+					<div class="col-sm-6">
+	       				<h5 class="h5 text-center">Penduduk dengan Usia Tertua</h5>
+	       				<table class="display table">
+	       					<tr>
+	       						<td>NIK</td>
+	       						<td th:text="${listWargaKelurahan[lastIndex].nik}"></td>
+	       					</tr>
+	       					<tr>
+	       						<td>Nama</td>
+	       						<td th:text="${listWargaKelurahan[lastIndex].nama}"></td>
+	       					</tr>
+	       					<tr>
+	       						<td>Tanggal Lahir</td>
+	       						<td th:text="${#dates.format(listWargaKelurahan[lastIndex].tanggalLahir, 'dd MMMM yyyy')}"></td>
+	       					</tr>
+	       				</table>
+	       			</div>
+	       			
+	       		</div> <hr/> <br/>
 	       				
 	       		<table id="wargaKelurahanTable" class="display table">
 		       		<thead>

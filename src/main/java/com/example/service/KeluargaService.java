@@ -9,4 +9,8 @@ public interface KeluargaService {
 	String addKeluarga(AlamatModel alamat);
 	
 	boolean updateKeluarga(KeluargaModel keluarga);
+	
+	String generateNkk(String kodeDomisili);
+
+	String generateNkk(String kodeDomisili, String nkkLama);
 }

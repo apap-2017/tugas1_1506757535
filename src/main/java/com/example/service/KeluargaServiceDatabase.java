@@ -75,6 +75,7 @@ public class KeluargaServiceDatabase implements KeluargaService {
 		}
 	}
 	
+	@Override
 	public String generateNkk(String kodeDomisili) {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyy");
 		String tanggalPembuatan = dateFormat.format(new Date());
@@ -89,6 +90,7 @@ public class KeluargaServiceDatabase implements KeluargaService {
 		return nkk;
 	}
 	
+	@Override
 	public String generateNkk(String kodeDomisili, String nkkLama) {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyy");
 		String tanggalPembuatan = dateFormat.format(new Date());

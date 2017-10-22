@@ -14,4 +14,8 @@ public interface PendudukService {
 	boolean updatePenduduk(PendudukModel penduduk);
 	
 	boolean updateStatusKematian(String nik);
+	
+	String generateNik(PendudukModel penduduk);
+	
+	String generateNik(PendudukModel penduduk, String nikLama);
 }
